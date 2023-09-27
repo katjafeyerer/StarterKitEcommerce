@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class BasketDataLoader {
 
@@ -20,8 +21,8 @@ public class BasketDataLoader {
                 if(line.isEmpty()){
                     continue;
                 }
-               // String[] columns = line.split(",");
-               // BasketData bd = new BasketData(columns[0], columns[1], Double.parseDouble(columns[2]), columns[3]);
+               //String[] columns = line.split(",");
+               //BasketData bd = new BasketData(columns[0], columns[1], Double.parseDouble(columns[2]), columns[3]);
                 BasketData bd = new Gson().fromJson(line, BasketData.class);
                 list.add(bd);
             }
@@ -34,6 +35,7 @@ public class BasketDataLoader {
             throw new DataFileException("IO Exception", e);
         }
 
+        Collections.sort(list, new BasketComparator());
         return list;
     }
 }
